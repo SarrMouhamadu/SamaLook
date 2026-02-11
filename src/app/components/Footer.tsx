@@ -19,7 +19,7 @@ export function Footer() {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="text-3xl">🇸🇳</span>
-            <span className="text-2xl font-bold">SamaLook.Com</span>
+            <span className="text-2xl font-bold">SamaLook</span>
           </div>
           <div className="h-1 w-24 bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 mx-auto rounded-full mb-6" />
           
@@ -84,7 +84,7 @@ export function Footer() {
           className="text-center pt-8 border-t border-gray-800"
         >
           <p className="text-gray-400 text-sm">
-            © 2026 SamaLook.Com - Tous droits réservés
+            © 2026 SamaLook - Tous droits réservés
           </p>
         </motion.div>
       </div>

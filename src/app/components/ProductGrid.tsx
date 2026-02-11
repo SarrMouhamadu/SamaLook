@@ -38,7 +38,7 @@ export function ProductGrid({ id, title, emoji, products, bgColor, onProductClic
         </motion.div>
 
         {/* Products Grid - Mobile First */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
@@ -83,9 +83,9 @@ export function ProductGrid({ id, title, emoji, products, bgColor, onProductClic
                 </div>
 
                 {/* Wave Payment Number */}
-                <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">Payer avec Wave au:</span>
-                  <span className="text-xs font-bold text-[#1dc4ff]">76 262 92 01</span>
+                <div className="mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
+                  <span className="text-[10px] sm:text-xs text-gray-500">Payer avec Wave au:</span>
+                  <span className="text-[10px] sm:text-xs font-bold text-[#1dc4ff]">76 262 92 01</span>
                 </div>
               </div>
             </motion.div>
