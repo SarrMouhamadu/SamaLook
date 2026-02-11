@@ -1,2 +1,11 @@
 # SamaLook
-Boutique en ligne complètement vibe coder figma make + Antigravity
+
+Boutique en ligne complètement vibe coder figma make + Antigravity.
+
+This is a code bundle for Maquette boutique en ligne. The original project is available at https://www.figma.com/design/BpoYqJITxoxaFT31LDyOln/Maquette-boutique-en-ligne.
+
+## Running the code
+
+Run `npm i` to install the dependencies.
+
+Run `npm run dev` to start the development server.
