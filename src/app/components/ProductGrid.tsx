@@ -84,8 +84,8 @@ export function ProductGrid({ id, title, emoji, products, bgColor, onProductClic
 
                 {/* Wave Payment Number */}
                 <div className="mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
-                  <span className="text-[10px] sm:text-xs text-gray-500">Payer avec Wave au:</span>
-                  <span className="text-[10px] sm:text-xs font-bold text-[#1dc4ff]">76 262 92 01</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 italic">Payer avec OM / Wave au:</span>
+                  <span className="text-[10px] sm:text-xs font-bold text-[#1dc4ff]">78 372 08 97</span>
                 </div>
               </div>
             </motion.div>

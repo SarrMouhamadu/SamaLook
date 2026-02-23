@@ -2,7 +2,7 @@
 
 # Configuration
 DOMAINS="samalook.com www.samalook.com"
-EMAIL="sarrmahmoud232@gmail.com" # Using the email found in the SSH key comment
+EMAIL="samalook221@gmail.com" # Using the email found in the SSH key comment
 STAGING=0 # Set to 1 for testing to avoid hitting rate limits
 
 if [ -d "./data/certbot/conf/live/samalook.com" ]; then

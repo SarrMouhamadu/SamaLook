@@ -143,8 +143,8 @@ export function ProductDetail({ product, onClose }: ProductDetailProps) {
                         
                         {/* Wave Info */}
                         <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col items-center gap-1 text-sm text-gray-500">
-                            <span>Payer avec Wave au:</span>
-                            <span className="font-bold text-xl text-[#1dc4ff]">76 262 92 01</span>
+                            <span className="italic">Payer avec Orange Money / Wave au:</span>
+                            <span className="font-bold text-2xl text-[#1dc4ff] tracking-wider">78 372 08 97</span>
                         </div>
                     </div>
             </motion.div>

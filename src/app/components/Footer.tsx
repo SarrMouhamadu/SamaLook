@@ -36,13 +36,13 @@ export function Footer() {
           transition={{ delay: 0.1 }}
           className="space-y-3 mb-8"
         >
-          <a href="tel:+221771234567" className="flex items-center justify-center gap-3 text-gray-400 hover:text-white transition-colors">
+          <a href="tel:+221783720897" className="flex items-center justify-center gap-3 text-gray-400 hover:text-white transition-colors">
             <Phone className="w-5 h-5 text-green-500" />
-            <span>+221 77 123 45 67</span>
+            <span>+221 78 372 08 97</span>
           </a>
-          <a href="mailto:contact@samalook.com" className="flex items-center justify-center gap-3 text-gray-400 hover:text-white transition-colors">
+          <a href="mailto:samalook221@gmail.com" className="flex items-center justify-center gap-3 text-gray-400 hover:text-white transition-colors">
             <Mail className="w-5 h-5 text-yellow-500" />
-            <span>contact@samalook.com</span>
+            <span>samalook221@gmail.com</span>
           </a>
           <div className="flex items-center justify-center gap-3 text-gray-400">
             <MapPin className="w-5 h-5 text-red-500" />
