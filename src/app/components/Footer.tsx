@@ -1,10 +1,11 @@
 import { motion } from 'motion/react';
-import { Facebook, Instagram, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MapPin, Music2 } from 'lucide-react';
 
 export function Footer() {
   const socialLinks = [
     { icon: Facebook, href: '#', label: 'Facebook' },
     { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Music2, href: 'https://www.tiktok.com/@samalook221', label: 'TikTok' },
   ];
 
   return (
