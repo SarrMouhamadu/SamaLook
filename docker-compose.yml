@@ -20,6 +20,7 @@ services:
     container_name: samalook-backend
     volumes:
       - ./server/products.json:/app/products.json
+      - ./server/uploads:/app/uploads
     restart: always
 
   certbot:
