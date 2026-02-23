@@ -1,17 +1,35 @@
 
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { ShoppingBag, Heart, Search, ArrowUp } from 'lucide-react';
+import { ShoppingBag, Heart, Search, ArrowUp, Settings } from 'lucide-react';
 import { Hero } from './components/Hero';
 import { ProductGrid } from './components/ProductGrid';
 import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
-import { ProductDetail, Product, ProductVariant } from './components/ProductDetail';
+import { ProductDetail, Product } from './components/ProductDetail';
+import { Admin } from './pages/Admin';
 
-function App() {
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+
+function Store() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<any>({});
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`${API_URL}/products`);
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,75 +51,6 @@ function App() {
       setSelectedProduct(null);
   };
 
-  const products = {
-    shoes: [
-      { 
-        id: 1, 
-        name: 'Sneakers Premium', 
-        price: '9 500', 
-        image: 'https://images.unsplash.com/photo-1765875485100-1afe930265ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzbmVha2VycyUyMHNob2VzfGVufDF8fHx8MTc3MDgwMTU3N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral', 
-        rating: 4.5,
-        sizes: ['38', '39', '40', '41', '42', '43'],
-        variants: [
-            { name: 'Noir', class: 'bg-black' },
-            { name: 'Blanc', class: 'bg-white border-gray-200' },
-            { name: 'Rouge', class: 'bg-red-500' }
-        ]
-      },
-      { id: 2, name: 'Chaussures Élégantes', price: '8 000', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500', rating: 5, sizes: ['40', '41', '42', '43', '44'], variants: [{ name: 'Marron', class: 'bg-[#8B4513]' }, { name: 'Noir', class: 'bg-black' }] },
-      { id: 3, name: 'Baskets Sport', price: '5 500', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500', rating: 4.8, sizes: ['38', '39', '40', '41', '42'], variants: [{ name: 'Rouge', class: 'bg-red-600' }, { name: 'Bleu', class: 'bg-blue-600' }] },
-      { id: 4, name: 'Sandales Cuir', price: '4 000', image: 'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=500', rating: 4.3, sizes: ['37', '38', '39', '40'], variants: [{ name: 'Cuir', class: 'bg-[#D2691E]' }, { name: 'Noir', class: 'bg-black' }] },
-      { id: 5, name: 'Chaussures Cuir', price: '7 500', image: 'https://images.unsplash.com/photo-1653869225353-8101df710ff4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwc2hvZXMlMjBsZWF0aGVyfGVufDF8fHx8MTc3MDgzODk3OXww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.7, sizes: ['40', '41', '42', '43', '44'] },
-      { id: 6, name: 'Sandales Été', price: '3 500', image: 'https://images.unsplash.com/photo-1732708862549-714f7478ca31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21lbiUyMHNhbmRhbHMlMjBzdW1tZXJ8ZW58MXx8fHwxNzcwODM4OTc5fDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.4, sizes: ['36', '37', '38', '39', '40'] },
-      { id: 7, name: 'Bottes Mode', price: '9 000', image: 'https://images.unsplash.com/photo-1610302594503-d334103e09ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW4lMjBib290cyUyMGZhc2hpb258ZW58MXx8fHwxNzcwODM4OTc5fDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.6, sizes: ['40', '41', '42', '43'] },
-      { id: 8, name: 'Sneakers Blanches', price: '6 000', image: 'https://images.unsplash.com/photo-1651371409956-20e79c06a8bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbmVha2VycyUyMHdoaXRlfGVufDF8fHx8MTc3MDczMTg1NHww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.9, sizes: ['38', '39', '40', '41', '42', '43', '44'], variants: [{ name: 'Blanc', class: 'bg-white border-gray-200' }] },
-    ],
-    watches: [
-      { id: 9, name: 'Montre Luxe Or', price: '10 000', image: 'https://images.unsplash.com/photo-1639564879163-a2a85682410e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3YXRjaCUyMHRpbWVwaWVjZXxlbnwxfHx8fDE3NzA3ODM3Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 5, variants: [{ name: 'Or', class: 'bg-yellow-400' }] },
-      { id: 10, name: 'Montre Sport', price: '6 500', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500', rating: 4.7, variants: [{ name: 'Noir', class: 'bg-black' }, { name: 'Argent', class: 'bg-gray-400' }] },
-      { id: 11, name: 'Montre Élégante', price: '8 500', image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500', rating: 4.6 },
-      { id: 12, name: 'Montre Classique', price: '7 000', image: 'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=500', rating: 4.4 },
-      { id: 13, name: 'Montre Or Premium', price: '9 500', image: 'https://images.unsplash.com/photo-1760532467609-45ed8016f795?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3YXRjaCUyMGdvbGR8ZW58MXx8fHwxNzcwNzYxMTk2fDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 5 },
-      { id: 14, name: 'Montre Cuir', price: '5 500', image: 'https://images.unsplash.com/photo-1651735060244-781017915251?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRjaCUyMGxlYXRoZXIlMjBzdHJhcHxlbnwxfHx8fDE3NzA4Mzg5ODB8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.8 },
-      { id: 15, name: 'Smartwatch', price: '9 000', image: 'https://images.unsplash.com/photo-1615834569398-4cc6036929f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHdhdGNoJTIwbW9kZXJufGVufDF8fHx8MTc3MDc2NzkyNXww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.7 },
-    ],
-    perfumes: [
-      { id: 16, name: 'Parfum Luxe', price: '6 500', image: 'https://images.unsplash.com/photo-1719175936556-dbd05e415913?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXJmdW1lJTIwYm90dGxlJTIwbHV4dXJ5fGVufDF8fHx8MTc3MDc0NjQ2NHww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.9, sizes: ['50ml', '100ml'] },
-      { id: 17, name: 'Eau de Toilette', price: '3 500', image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500', rating: 4.5, sizes: ['100ml'] },
-      { id: 18, name: 'Parfum Floral', price: '4 000', image: 'https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=500', rating: 4.7, sizes: ['50ml', '75ml'] },
-      { id: 19, name: 'Parfum Homme', price: '5 000', image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=500', rating: 4.6, sizes: ['100ml'], variants: [{ name: 'Noir', class: 'bg-black' }] },
-      { id: 20, name: 'Parfum Spray', price: '5 500', image: 'https://images.unsplash.com/photo-1759793500112-c588839cfc6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXJmdW1lJTIwc3ByYXklMjBib3R0bGV8ZW58MXx8fHwxNzcwODM4OTgwfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.8 },
-      { id: 21, name: 'Fragrance Cosmétique', price: '4 500', image: 'https://images.unsplash.com/photo-1621088552393-62c8fd01edc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmFncmFuY2UlMjBjb3NtZXRpY3xlbnwxfHx8fDE3NzA4Mzg5ODF8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.4 },
-    ],
-    fabrics: [
-      { id: 22, name: 'Wax Premium', price: '4 000/m', image: 'https://images.unsplash.com/photo-1768212565424-efa3a3852b81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwd2F4JTIwZmFicmljJTIwY29sb3JmdWx8ZW58MXx8fHwxNzcwODM4MTExfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 5, variants: [{ name: 'Motif A', class: 'bg-orange-500' }, { name: 'Motif B', class: 'bg-green-500' }] },
-      { id: 23, name: 'Getzner Qualité', price: '5 500/m', image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=500', rating: 4.8 },
-      { id: 24, name: 'Bazin Riche', price: '6 500/m', image: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=500', rating: 4.9 },
-      { id: 25, name: 'Wax Hollandais', price: '5 000/m', image: 'https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500', rating: 4.7 },
-      { id: 26, name: 'Tissu Africain', price: '4 500/m', image: 'https://images.unsplash.com/photo-1768212566108-4ce4f329e4d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwZmFicmljJTIwcGF0dGVybnxlbnwxfHx8fDE3NzA4Mzg5ODF8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.9 },
-      { id: 27, name: 'Tissu Coloré', price: '3 500/m', image: 'https://images.unsplash.com/photo-1731275668160-f18f97c6faac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMHRleHRpbGUlMjBtYXRlcmlhbHxlbnwxfHx8fDE3NzA4Mzg5ODF8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.6 },
-      { id: 28, name: 'Ankara Wax', price: '4 800/m', image: 'https://images.unsplash.com/photo-1580089470033-b564a216c4ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmthcmElMjBmYWJyaWMlMjB3YXh8ZW58MXx8fHwxNzcwODM4OTgyfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.8 },
-    ],
-    dresses: [
-      { id: 29, name: 'Robe Élégante', price: '7 500', image: 'https://images.unsplash.com/photo-1761574028262-6d834741bfd8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZHJlc3MlMjBmYXNoaW9ufGVufDF8fHx8MTc3MDgyNzQyMnww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.8, sizes: ['S', 'M', 'L', 'XL'], variants: [{ name: 'Noir', class: 'bg-black' }, { name: 'Rouge', class: 'bg-red-600' }] },
-      { id: 30, name: 'Robe Africaine', price: '6 000', image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500', rating: 4.9, sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
-      { id: 31, name: 'Robe de Soirée', price: '9 500', image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=500', rating: 5, sizes: ['S', 'M', 'L'], variants: [{ name: 'Or', class: 'bg-yellow-400' }, { name: 'Argent', class: 'bg-gray-400' }] },
-      { id: 32, name: 'Robe Casual', price: '4 500', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500', rating: 4.6, sizes: ['S', 'M', 'L'] },
-      { id: 33, name: 'Robe Soirée Chic', price: '10 000', image: 'https://images.unsplash.com/photo-1763336016192-c7b62602e993?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxldmVuaW5nJTIwZHJlc3MlMjBlbGVnYW50fGVufDF8fHx8MTc3MDgzODk4Mnww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.9 },
-      { id: 34, name: 'Robe Décontractée', price: '5 000', image: 'https://images.unsplash.com/photo-1770364019604-fd4ccecf4076?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXN1YWwlMjBkcmVzcyUyMHdvbWFufGVufDF8fHx8MTc3MDc4MTcyOHww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.5 },
-      { id: 35, name: 'Robe Traditionnelle', price: '8 500', image: 'https://images.unsplash.com/photo-1746189897983-ffd3a582a827?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwZHJlc3MlMjB0cmFkaXRpb25hbHxlbnwxfHx8fDE3NzA4Mzg5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080', rating: 5 },
-    ],
-    pullovers: [
-      { id: 36, name: 'Pull-over Cozy', price: '4 500', image: 'https://images.unsplash.com/photo-1728898868297-b53e09a954c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3p5JTIwcHVsbG92ZXIlMjBzd2VhdGVyfGVufDF8fHx8MTc3MDgzODExMnww&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.7, sizes: ['S', 'M', 'L', 'XL'] },
-      { id: 37, name: 'Pull-over Laine', price: '6 000', image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500', rating: 4.8 },
-      { id: 38, name: 'Cardigan Chic', price: '5 000', image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500', rating: 4.5 },
-      { id: 39, name: 'Pull Col Roulé', price: '5 500', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500', rating: 4.6 },
-      { id: 40, name: 'Sweater Tricoté', price: '7 000', image: 'https://images.unsplash.com/photo-1769772273242-a7bd27684da4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2VhdGVyJTIwa25pdCUyMGNvenl8ZW58MXx8fHwxNzcwODE5OTIzfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.9 },
-      { id: 41, name: 'Cardigan Fashion', price: '8 000', image: 'https://images.unsplash.com/photo-1679666715413-1e6abc4710ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJkaWdhbiUyMGZhc2hpb258ZW58MXx8fHwxNzcwODM4OTgzfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.7 },
-      { id: 42, name: 'Pull Chaud Hiver', price: '6 500', image: 'https://images.unsplash.com/photo-1512917602760-97a8fb80dca5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwdWxsb3ZlciUyMHdhcm0lMjB3aW50ZXJ8ZW58MXx8fHwxNzcwODM4OTgzfDA&ixlib=rb-4.1.0&q=80&w=1080', rating: 4.8 },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-white">
       {/* Simple Header */}
@@ -117,15 +66,17 @@ function App() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-2"
             >
-              <img src="/samalook-logo.png" alt="SamaLook Logo" className="h-10 w-auto object-contain bg-white/10 rounded-lg p-1" />
+              <Link to="/">
+                <img src="/samalook-logo.png" alt="SamaLook Logo" className="h-10 w-auto object-contain bg-white/10 rounded-lg p-1" />
+              </Link>
             </motion.div>
 
             <div className="flex items-center gap-4 sm:gap-6">
+              <Link to="/admin" className="p-2 hover:bg-white/20 rounded-full transition-colors">
+                <Settings className="w-5 h-5 text-white" />
+              </Link>
               <button className="p-2 hover:bg-white/20 rounded-full transition-colors">
                 <Search className="w-5 h-5 text-white" />
-              </button>
-              <button className="p-2 hover:bg-white/20 rounded-full transition-colors">
-                <Heart className="w-5 h-5 text-white" />
               </button>
               <button className="p-2 hover:bg-white/20 rounded-full transition-colors relative">
                 <ShoppingBag className="w-5 h-5 text-white" />
@@ -141,60 +92,25 @@ function App() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Products Sections - Simple scroll */}
-      <ProductGrid
-        id="chaussures"
-        title="Chaussures"
-        emoji="👟"
-        products={products.shoes}
-        bgColor="bg-amber-50"
-        onProductClick={handleProductClick}
-      />
-
-      <ProductGrid
-        id="montres"
-        title="Montres"
-        emoji="⌚"
-        products={products.watches}
-        bgColor="bg-green-50"
-        onProductClick={handleProductClick}
-      />
-
-      <ProductGrid
-        id="parfums"
-        title="Parfums"
-        emoji="💐"
-        products={products.perfumes}
-        bgColor="bg-red-50"
-        onProductClick={handleProductClick}
-      />
-
-      <ProductGrid
-        id="tissus-sénégalais"
-        title="Tissus Sénégalais"
-        emoji="🎨"
-        products={products.fabrics}
-        bgColor="bg-yellow-50"
-        onProductClick={handleProductClick}
-      />
-
-      <ProductGrid
-        id="robes"
-        title="Robes"
-        emoji="👗"
-        products={products.dresses}
-        bgColor="bg-orange-50"
-        onProductClick={handleProductClick}
-      />
-
-      <ProductGrid
-        id="pull-overs"
-        title="Pull-overs"
-        emoji="🧥"
-        products={products.pullovers}
-        bgColor="bg-teal-50"
-        onProductClick={handleProductClick}
-      />
+      {/* Products Sections */}
+      {products.shoes && (
+        <ProductGrid id="chaussures" title="Chaussures" emoji="👟" products={products.shoes} bgColor="bg-amber-50" onProductClick={handleProductClick} />
+      )}
+      {products.watches && (
+        <ProductGrid id="montres" title="Montres" emoji="⌚" products={products.watches} bgColor="bg-green-50" onProductClick={handleProductClick} />
+      )}
+      {products.perfumes && (
+        <ProductGrid id="parfums" title="Parfums" emoji="💐" products={products.perfumes} bgColor="bg-red-50" onProductClick={handleProductClick} />
+      )}
+      {products.fabrics && (
+        <ProductGrid id="tissus-sénégalais" title="Tissus Sénégalais" emoji="🎨" products={products.fabrics} bgColor="bg-yellow-50" onProductClick={handleProductClick} />
+      )}
+      {products.dresses && (
+        <ProductGrid id="robes" title="Robes" emoji="👗" products={products.dresses} bgColor="bg-orange-50" onProductClick={handleProductClick} />
+      )}
+      {products.pullovers && (
+        <ProductGrid id="pull-overs" title="Pull-overs" emoji="🧥" products={products.pullovers} bgColor="bg-teal-50" onProductClick={handleProductClick} />
+      )}
 
       {/* Newsletter */}
       <Newsletter />
@@ -220,6 +136,17 @@ function App() {
         </motion.button>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Store />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </Router>
   );
 }
 

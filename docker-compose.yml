@@ -13,6 +13,14 @@ services:
     container_name: samalook-app
     depends_on:
       - certbot
+      - backend
+
+  backend:
+    build: ./server
+    container_name: samalook-backend
+    volumes:
+      - ./server/products.json:/app/products.json
+    restart: always
 
   certbot:
     image: certbot/certbot
